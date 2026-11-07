@@ -1,4 +1,10 @@
 # (EDITED PACKAGE)
 
+como se dice im tryna eat kidneys
 
-hi this is taken from dandys dex btw
+```
+[[ballsdex.packages]]
+location = "git+https://github.com/kaboomtsarbobm/i-want-kidneys-for-dinner.git"
+path = "dandys_shops"
+enabled = true
+```
