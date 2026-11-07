@@ -7,10 +7,6 @@ from bd_models.models import Ball
 class Shop(models.Model):
     key = models.SlugField(max_length=40, unique=True, help_text="Unique internal key, e.g. dandys or bobettes.")
     name = models.CharField(max_length=80)
-    regime_name = models.CharField(
-        max_length=64,
-        help_text='Only balls whose regime name matches this exactly are eligible (case-insensitive).',
-    )
     enabled = models.BooleanField(default=True)
     welcome_message = models.TextField(default="Welcome! Choose an item below to purchase.")
     slots = models.PositiveSmallIntegerField(default=3, validators=[MinValueValidator(1)])
@@ -66,7 +62,6 @@ class ShopEvent(models.Model):
 
 
 class ShopCycleState(models.Model):
-    # Single row (pk=1). The next regular-cycle spawn is either "event" or "shop".
     id = models.PositiveSmallIntegerField(primary_key=True, default=1, editable=False)
     next_kind = models.CharField(max_length=16, choices=(("event", "Event"), ("shop", "Dandy's Store")), default="event")
 
@@ -75,3 +70,15 @@ class ShopCycleState(models.Model):
 
     def __str__(self):
         return f"Next: {self.next_kind}"
+
+
+class ShopMessage(models.Model):
+    key = models.CharField(max_length=64, unique=True)
+    text = models.TextField(default="SAMPLETEXT")
+
+    class Meta:
+        db_table = "dandys_shop_message"
+        ordering = ("key",)
+
+    def __str__(self):
+        return self.key
